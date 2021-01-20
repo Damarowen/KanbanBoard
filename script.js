@@ -2,7 +2,6 @@ const addBtns = document.querySelectorAll('.add-btn:not(.solid)');
 const saveItemBtns = document.querySelectorAll('.solid');
 const addItemContainers = document.querySelectorAll('.add-container');
 const addItems = document.querySelectorAll('.add-item');
-
 //* Item Lists
 const boardLists = document.querySelectorAll('.drag-item-list');
 const backlogList = document.getElementById('backlog-list');
@@ -54,17 +53,26 @@ function savedBoardList() {
   })
 }
 
+//* filter Arrays to remove empty itemrs
+function filterArray(arr) {
+  const filterArr = arr.filter(x => x !== null);
+  return filterArr;
+}
 
 //* Create DOM Elements for each list item
 function createList(board, column, val, index) {
 
   //* List Item
   const list = document.createElement('li');
-  list.className = "drag-item"
+  list.classList.add('drag-item');
   list.textContent = val
+  list.id = index;
+
   //* Enable Drag
   list.draggable = true;
   list.setAttribute('onDragStart', 'drag(event)')
+  list.setAttribute('onfocusout', `updateItem(${index}, ${column})`)
+  list.contentEditable = true;
 
   board.appendChild(list)
 
@@ -85,13 +93,14 @@ function updateBoard() {
   backlogListArray.forEach((val, i) => {
     createList(backlogList, 0, val, i)
   })
-
+  backlogListArray = filterArray(backlogListArray)
 
   //* Progress Column
   progressList.textContent = '';
   progressListArray.forEach((val, i) => {
     createList(progressList, 1, val, i)
   })
+  progressListArray = filterArray(progressListArray)
 
 
   //* Complete Column
@@ -99,6 +108,7 @@ function updateBoard() {
   completeListArray.forEach((val, i) => {
     createList(completeList, 2, val, i)
   })
+  completeListArray = filterArray(completeListArray)
 
 
   //* On Hold Column
@@ -106,13 +116,58 @@ function updateBoard() {
   onHoldListArray.forEach((val, i) => {
     createList(onHoldList, 3, val, i)
   })
+  onHoldListArray = filterArray(onHoldListArray)
 
   //* Run savedBoardList only once, Update Local Storage
-   updatedOnLoad = true
+  updatedOnLoad = true
   savedBoardList();
 
 }
 
+
+//* Update item - Delete Item
+
+function updateItem(id, column) {
+  const selectedArray = listArrays[column];
+  //*retrieve spesific id
+  const selectedColumn = boardLists[column].children;
+  //* delete
+  if(!dragging){
+    if (!selectedColumn[id].textContent) {
+      delete selectedArray[id]
+    }
+    updateBoard()
+  }
+
+  }
+  
+
+//* Add new list
+function addNewList(column) {
+  const item = addItems[column].textContent;
+  const selectedArray = listArrays[column];
+  selectedArray.push(item);
+  addItems[column].textContent = '';
+  updateBoard(column)
+}
+
+//* show add item input box
+
+function showInputBox(column) {
+  addBtns[column].style.visibility = 'hidden';
+  saveItemBtns[column].style.display = 'flex';
+  addItemContainers[column].style.display = 'flex';
+
+}
+
+//* hide item input box
+
+function hideInputBox(column) {
+  addBtns[column].style.visibility = 'visible';
+  saveItemBtns[column].style.display = 'none';
+  addItemContainers[column].style.display = 'none';
+  addNewList(column);
+}
 
 //* Allow array to reflect Drag and Drop items
 
@@ -121,6 +176,7 @@ function rebuildArrays() {
   progressListArray = []
   completeListArray = []
   onHoldListArray = []
+  
   for (let i = 0; i < backlogList.children.length; i++) {
     backlogListArray.push(backlogList.children[i].textContent)
   }
@@ -146,7 +202,7 @@ function rebuildArrays() {
 //* Drag Function
 function drag(e) {
   draggeditems = e.target
-  console.log(draggeditems)
+  dragging = true;
 
 }
 
@@ -169,17 +225,20 @@ function dragEnter(column) {
 
 function drop(e) {
   e.preventDefault()
+  const parent = boardLists[currentColumn]
+
   //* Remove Background Color
-  boardLists.forEach(x => {
-    x.classList.remove('over')
-  })
+  boardLists.forEach((column) => {
+    column.classList.remove('over');
+  });
 
   //* add list to board
-  const parent = boardLists[currentColumn]
-  parent.append(draggeditems)
+  parent.appendChild(draggeditems)
+  dragging = false;
 
   //* call rebuild
   rebuildArrays()
 }
+// On Load
 
 updateBoard();
