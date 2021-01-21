@@ -3,8 +3,8 @@ const saveItemBtns = document.querySelectorAll('.solid');
 const addItemContainers = document.querySelectorAll('.add-container');
 const addItems = document.querySelectorAll('.add-item');
 //* Item Lists
-const boardLists = document.querySelectorAll('.drag-item-list');
-const backlogList = document.getElementById('backlog-list');
+const boardLists = document.querySelectorAll('.board-item-list');
+const todoList = document.getElementById('todo-list');
 const progressList = document.getElementById('progress-list');
 const completeList = document.getElementById('complete-list');
 const onHoldList = document.getElementById('on-hold-list');
@@ -13,7 +13,7 @@ const onHoldList = document.getElementById('on-hold-list');
 let updatedOnLoad = false;
 
 //* Initialize Arrays
-let backlogListArray = [];
+let todoListArray = [];
 let progressListArray = [];
 let completeListArray = [];
 let onHoldListArray = [];
@@ -29,15 +29,15 @@ let dragging = false;
 
 //* Get Arrays from localStorage if available, set default values if not
 function getBoardList() {
-  if (localStorage.getItem('backlog')) {
+  if (localStorage.getItem('todo')) {
     console.log('Get Item TRUE RUNNING..')
-    backlogListArray = JSON.parse(localStorage.backlog);
+    todoListArray = JSON.parse(localStorage.todo);
     progressListArray = JSON.parse(localStorage.progress);
     completeListArray = JSON.parse(localStorage.complete);
     onHoldListArray = JSON.parse(localStorage.onHold);
   } else {
     console.log('Get Item FALSE RUNNING..')
-    backlogListArray = ['Learn React', 'Create First Project Reack'];
+    todoListArray = ['Learn React', 'Create First Project Reack'];
     progressListArray = ['Work on projects', 'Listen to music'];
     completeListArray = ['Done First Project', 'Have knowledge on React'];
     onHoldListArray = ['Lazy'];
@@ -46,10 +46,10 @@ function getBoardList() {
 
 //* Set localStorage Arrays
 function savedBoardList() {
-  listArrays = [backlogListArray, progressListArray,
+  listArrays = [todoListArray, progressListArray,
     completeListArray, onHoldListArray
   ];
-  const arrayNames = ['backlog', 'progress', 'complete', 'onHold']
+  const arrayNames = ['todo', 'progress', 'complete', 'onHold']
   arrayNames.forEach((arr, i) => {
     //* set to string from array
     localStorage.setItem(`${arr}`, JSON.stringify(listArrays[i]));
@@ -67,7 +67,7 @@ function createList(board, column, val, index) {
 
   //* List Item
   const list = document.createElement('li');
-  list.classList.add('drag-item');
+  list.classList.add('board-item');
   list.textContent = val
   list.id = index;
 
@@ -89,14 +89,14 @@ function updateBoard() {
   }
 
   // TODO: IF updateOnload true , below code will run
-  // TODO : Firs set textContent to zero
+  // TODO : First set textContent to zero
 
-  //* Backlog Column
-  backlogList.textContent = '';
-  backlogListArray.forEach((val, i) => {
-    createList(backlogList, 0, val, i)
+  //* todo Column
+  todoList.textContent = '';
+  todoListArray.forEach((val, i) => {
+    createList(todoList, 0, val, i)
   })
-  backlogListArray = filterArray(backlogListArray)
+  todoListArray = filterArray(todoListArray)
 
   //* Progress Column
   progressList.textContent = '';
@@ -181,12 +181,12 @@ function hideInputBox(column) {
 function rebuildArrays() {
 
 
-  // backlogListArray = []
-  // for (let i = 0; i < backlogList.children.length; i++) {
-  //   backlogListArray.push(backlogList.children[i].textContent)
+  // todoListArray = []
+  // for (let i = 0; i < todoList.children.length; i++) {
+  //   todoListArray.push(todoList.children[i].textContent)
   // }
-  backlogListArray = Array.from(backlogList.children).map(x => x.textContent)
-  console.log(backlogListArray)
+  todoListArray = Array.from(todoList.children).map(x => x.textContent)
+  console.log(todoListArray)
 
 
   // progressListArray = []

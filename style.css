@@ -36,29 +36,29 @@ ul {
   padding: 0;
 }
 
-.drag-container {
+.board-container {
   margin: 20px;
 }
 
-.drag-list {
+.board-list {
   display: flex;
   align-items: flex-start;
 }
 
 /* Columns */
-.drag-column {
+.board-column {
   flex: 1;
   margin: 0 10px;
   position: relative;
-  background-color: rgba(207, 205, 205, 0.4);
+  background-color: rgb(54 52 52 / 40%);
   border-radius: 10px;
   overflow-x: hidden;
 }
 
-.backlog-column .header,
-.backlog-column .solid,
-.backlog-column .solid:hover,
-.backlog-column .over {
+.todo-column .header,
+.todo-column .solid,
+.todo-column .solid:hover,
+.todo-column .over {
   background-color: var(--column-1);
 }
 
@@ -105,11 +105,11 @@ h1 {
   padding: 50px 10px;
 }
 
-.drag-item-list {
+.board-item-list {
   min-height: 100px;
 }
 
-.drag-item {
+.board-item {
   margin: 10px;
   padding: 10px;
   /* height: fit-content; */
@@ -120,7 +120,7 @@ h1 {
   cursor: pointer;
 }
 
-.drag-item:focus {
+.board-item:focus {
   outline: none;
   background-color: white;
   color: black;
@@ -208,15 +208,15 @@ h1 {
     overflow-y: auto;
   }
 
-  .drag-container {
+  .board-container {
     margin: 0;
   }
 
-  .drag-list {
+  .board-list {
     display: block;
   }
 
-  .drag-column {
+  .board-column {
     margin: 10px;
   }
 }
