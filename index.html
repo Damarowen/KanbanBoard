@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop</title>
+    <title>Kanban Board by Damarowen</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,16 +12,16 @@
 <body>
     <h1 class="main-title">Kanban Board</h1>
 
-    <div class="drag-container">
-        <ul class="drag-list">
+    <div class="board-container">
+        <ul class="board-list">
 
-            <li class="drag-column backlog-column">
+            <li class="board-column todo-column">
                 <span class="header">
-                    <h1>Backlog</h1>
+                    <h1>To do</h1>
                 </span>
                 <!-- * Backing content -->
-                <div id="backlog-content">
-                    <ul class="drag-item-list" id="backlog-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                <div id="todo-content">
+                    <ul class="board-item-list" id="todo-list" ondrop="drop(event)" ondragover="allowDrop(event)"
                         ondragenter="dragEnter(0)">
 
                     </ul>
@@ -44,13 +44,13 @@
             </li>
 
 
-            <li class="drag-column progress-column">
+            <li class="board-column progress-column">
                 <span class="header">
                     <h1>Progress</h1>
                 </span>
                 <!-- * Backing content -->
                 <div id="progress-content">
-                    <ul class="drag-item-list" id="progress-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    <ul class="board-item-list" id="progress-list" ondrop="drop(event)" ondragover="allowDrop(event)"
                         ondragenter="dragEnter(1)">
 
                     </ul>
@@ -73,13 +73,13 @@
             </li>
 
 
-            <li class="drag-column complete-column">
+            <li class="board-column complete-column">
                 <span class="header">
                     <h1>Complete</h1>
                 </span>
                 <!-- * Backing content -->
                 <div id="complete-content">
-                    <ul class="drag-item-list" id="complete-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    <ul class="board-item-list" id="complete-list" ondrop="drop(event)" ondragover="allowDrop(event)"
                         ondragenter="dragEnter(2)">
 
                     </ul>
@@ -102,13 +102,13 @@
             </li>
 
 
-            <li class="drag-column on-hold-column">
+            <li class="board-column on-hold-column">
                 <span class="header">
                     <h1>On Hold</h1>
                 </span>
                 <!-- * Backing content -->
                 <div id="on-hold-content">
-                    <ul class="drag-item-list" id="on-hold-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                    <ul class="board-item-list" id="on-hold-list" ondrop="drop(event)" ondragover="allowDrop(event)"
                         ondragenter="dragEnter(3)">
 
                     </ul>
