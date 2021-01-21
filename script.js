@@ -23,6 +23,9 @@ let listArrays = []
 let draggeditems;
 let currentColumn;
 
+//* for update and delete list 
+let dragging = false;
+
 
 //* Get Arrays from localStorage if available, set default values if not
 function getBoardList() {
@@ -132,15 +135,19 @@ function updateItem(id, column) {
   //*retrieve spesific id
   const selectedColumn = boardLists[column].children;
   //* delete
-  if(!dragging){
+  if (!dragging) {
     if (!selectedColumn[id].textContent) {
+      console.log(selectedColumn[id])
       delete selectedArray[id]
+    } else {
+      selectedArray[id] = selectedColumn[id].textContent
+      console.log(" selectedArray " + selectedArray[id])
     }
     updateBoard()
   }
 
-  }
-  
+}
+
 
 //* Add new list
 function addNewList(column) {
@@ -172,27 +179,42 @@ function hideInputBox(column) {
 //* Allow array to reflect Drag and Drop items
 
 function rebuildArrays() {
-  backlogListArray = []
-  progressListArray = []
-  completeListArray = []
-  onHoldListArray = []
-  
-  for (let i = 0; i < backlogList.children.length; i++) {
-    backlogListArray.push(backlogList.children[i].textContent)
-  }
 
 
-  for (let i = 0; i < progressList.children.length; i++) {
-    progressListArray.push(progressList.children[i].textContent)
-  }
+  // backlogListArray = []
+  // for (let i = 0; i < backlogList.children.length; i++) {
+  //   backlogListArray.push(backlogList.children[i].textContent)
+  // }
+  backlogListArray = Array.from(backlogList.children).map(x => x.textContent)
+  console.log(backlogListArray)
 
-  for (let i = 0; i < completeList.children.length; i++) {
-    completeListArray.push(completeList.children[i].textContent)
-  }
 
-  for (let i = 0; i < onHoldList.children.length; i++) {
-    onHoldListArray.push(onHoldList.children[i].textContent)
-  }
+  // progressListArray = []
+
+  // for (let i = 0; i < progressList.children.length; i++) {
+  //   progressListArray.push(progressList.children[i].textContent)
+  // }
+
+  progressListArray = Array.from(progressList.children).map(x => x.textContent)
+  console.log(progressListArray)
+
+  // completeListArray = []
+
+  // for (let i = 0; i < completeList.children.length; i++) {
+  //   completeListArray.push(completeList.children[i].textContent)
+  // }
+  completeListArray = Array.from(completeList.children).map(x => x.textContent)
+  console.log(completeListArray)
+
+
+  // onHoldListArray = [] 
+
+  // for (let i = 0; i < onHoldList.children.length; i++) {
+  //   onHoldListArray.push(onHoldList.children[i].textContent)
+  // }
+  onHoldListArray = Array.from(onHoldList.children).map(x => x.textContent)
+  console.log(onHoldListArray)
+
 
   //* update
   console.log(updatedOnLoad)
@@ -221,7 +243,7 @@ function dragEnter(column) {
   currentColumn = column;
 }
 
-//*? Droping list in column
+//* Droping list in column
 
 function drop(e) {
   e.preventDefault()
@@ -239,6 +261,7 @@ function drop(e) {
   //* call rebuild
   rebuildArrays()
 }
-// On Load
+
+//* On Load
 
 updateBoard();
