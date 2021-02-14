@@ -51,12 +51,13 @@ function savedBoardList() {
   ];
   const arrayNames = ['todo', 'progress', 'complete', 'onHold']
   arrayNames.forEach((arr, i) => {
-    //* set to string from array
+    //* set to string from array and save each name from array to localStorage
+    //* setItem is for save
     localStorage.setItem(`${arr}`, JSON.stringify(listArrays[i]));
   })
 }
 
-//* filter Arrays to remove empty itemrs
+//* filter Arrays to remove empty items
 function filterArray(arr) {
   const filterArr = arr.filter(x => x !== null);
   return filterArr;
